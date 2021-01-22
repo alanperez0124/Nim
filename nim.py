@@ -10,8 +10,21 @@ class Player:
         """Assign the player a name"""
         self.name = name
 
+
     def get_move(self):
-        return input("Input how many coins you'd like to take away: ")
+        valid_move = False
+        while not valid_move:
+            val = input("Input how many coins you'd like to take away: ")
+            try:
+                if int(val) not in range(1, 3):
+                    raise ValueError
+                else:
+                    valid_move = True
+
+            except ValueError:
+                print('Invalid input, please input 1, 2 or 3.')
+
+        return val
 
 
 class RandomComputerPlayer:
@@ -43,9 +56,6 @@ class Gameplay:
         print(" o" * self.coins, '\n')
 
 
-
-
-
 def play(game, p1, p2, print_game):
     if print_game:
         game.print_coins()
@@ -69,14 +79,11 @@ def play(game, p1, p2, print_game):
             turn = 'p1'
 
     if turn == 'p2':
-        game.current_winner = p1 
+        game.current_winner = p1
         print(f'winner is {p1.name}')
     else:
-        game.current_winner = p2 
+        game.current_winner = p2
         print(f'winner is {p2.bot_name}')
-
-    
-
 
 
 # Main body of code
