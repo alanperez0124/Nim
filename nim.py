@@ -12,14 +12,15 @@ class Player:
 
 
     def get_move(self):
+        """Asks player for input and checks to see if move is valid"""
         valid_move = False
         while not valid_move:
-            val = input("Input how many coins you'd like to take away: ")
+            val = input("Input how many coins you'd like to take away: ")  # place inside to ask again
             try:
-                if int(val) not in range(1, 3):
+                if int(val) not in range(1, 4):
                     raise ValueError
                 else:
-                    valid_move = True
+                    valid_move = True  # will end the while loop
 
             except ValueError:
                 print('Invalid input, please input 1, 2 or 3.')
@@ -32,6 +33,7 @@ class RandomComputerPlayer:
         """Gives the random bot a name from list"""
         self.bot_name = random.choice(first_names)
         print(rf'You will be playing against {self.bot_name}')
+
 
     def get_move(self):
         return random.randint(1, 3)
@@ -80,10 +82,10 @@ def play(game, p1, p2, print_game):
 
     if turn == 'p2':
         game.current_winner = p1
-        print(f'winner is {p1.name}')
+        print(f'{p1.name.upper()} WINS!')
     else:
         game.current_winner = p2
-        print(f'winner is {p2.bot_name}')
+        print(f'{p2.bot_name.upper()} WINS!')
 
 
 # Main body of code
