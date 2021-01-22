@@ -1,5 +1,6 @@
 import random
 
+# Opening the names.txt file for the random bots
 names = open("names.txt", "r")
 first_names = [line.split(" ")[0] for line in names]
 
@@ -7,7 +8,7 @@ first_names = [line.split(" ")[0] for line in names]
 class Player:
     def __init__(self, name):
         """Assign the player a name"""
-        self.human = name
+        self.name = name
 
     def get_move(self):
         return input("Input how many coins you'd like to take away: ")
@@ -26,6 +27,7 @@ class RandomComputerPlayer:
 class GeniusComputerPlayer:
     def __init__(self):
         self.bot_name = random.choice(first_names)
+        print()
         print(rf'You will be playing against {self.bot_name}')
 
     def get_move(self):
@@ -35,6 +37,7 @@ class GeniusComputerPlayer:
 class Gameplay:
     def __init__(self):
         self.coins = 12
+        self.current_winner = None  # Keeping track of the winner
 
     def print_coins(self):
         print(" o" * self.coins, '\n')
@@ -65,6 +68,14 @@ def play(game, p1, p2, print_game):
         else:
             turn = 'p1'
 
+    if turn == 'p2':
+        game.current_winner = p1 
+        print(f'winner is {p1.name}')
+    else:
+        game.current_winner = p2 
+        print(f'winner is {p2.bot_name}')
+
+    
 
 
 
