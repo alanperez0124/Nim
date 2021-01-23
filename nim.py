@@ -13,16 +13,22 @@ class Player:
     def get_move(self, coins, name):
         """Asks player for input and checks to see if move is valid"""
         valid_move = False
-        while not valid_move:
-            # val = input(f"{name}, input how many coins you'd like to take away: ")  # place inside to ask again
+        enough_coins = False
+        while not valid_move or not enough_coins:
             val = input(f"{name} takes: ")
-            # print()
-            try:
+            try:  # to make sure the value is 1, 2 or 3
                 if int(val) not in range(1, 4):
                     raise ValueError
                 else:
-                    valid_move = True  # will end the while loop
+                    valid_move = True  
+                    try:  # to make sure there are enough coins
+                        if int(val) > coins:
+                            raise PermissionError
+                        else:
+                            enough_coins = True
 
+                    except PermissionError:
+                        print('Not enough coins, please input appropriate amount.')
             except ValueError:
                 print('Invalid input, please input 1, 2 or 3.')
 
@@ -36,9 +42,15 @@ class RandomComputerPlayer:
 
 
     def get_move(self, coins, name):
-        x = random.randint(1, 3)
-        print(f"{name} takes {x}")
-        return x
+        """Ensures that random move is valid and returns move"""
+        valid_move = False
+        while not valid_move:
+            x = random.randint(1, 3)
+            if x <= coins:
+                print(f"{name} takes {x}")
+                val = True
+                return x
+
 
 
 class GeniusComputerPlayer:
@@ -102,7 +114,8 @@ def play(game, p1, p2, print_game):
 
 # Main body of code
 print('If you\'d like to watch two robots go at it, please type \'4\' when prompted for number.')
-choice = input('Would you like to play against a smart AI, a dumb AI, or another human? (1, 2, 3): ')
+choice = input('Would you like to play against a smart AI, a random bot, or another human? (1, 2, 3): ')
+print()
 if choice == '1':
     p1 = Player(input('Player 1, please enter your name: '))
     p2 = GeniusComputerPlayer()
