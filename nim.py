@@ -35,7 +35,7 @@ class RandomComputerPlayer:
         print(rf'You will be playing against {self.bot_name}')
 
 
-    def get_move(self):
+    def get_move(self, coins):
         return random.randint(1, 3)
 
 
@@ -45,8 +45,14 @@ class GeniusComputerPlayer:
         print()
         print(rf'You will be playing against {self.bot_name}')
 
-    def get_move(self):
-        return random.randint(1, 3)
+    def get_move(self, coins):
+        if coins % 4 == 3:
+            return 3
+        elif coins % 4 ==2:
+            return 2
+        elif coins % 4 == 1:
+            return 1
+        
 
 
 class Gameplay:
@@ -69,7 +75,7 @@ def play(game, p1, p2, print_game):
             take_away = p1.get_move()
 
         else:
-            take_away = p2.get_move()
+            take_away = p2.get_move(game.coins)
             print(rf'{p2.bot_name} took {take_away} coins')
 
         game.coins -= int(take_away)
